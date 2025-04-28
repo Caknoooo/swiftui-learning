@@ -41,7 +41,7 @@ struct ContentView: View {
     @StateObject var user: User = .init(name: "M Naufal Badruttamam", jobTitle: "Software Engineer", followerCount: 10, bio: "Hello, I am M Naufal Badruttamam")
     
     // Declare
-//    var userObservable: UserObservable = .init(name: "Caknor", jobTitle: "Programmer", followerCount: 20, bio: "Hello World")
+    //    var userObservable: UserObservable = .init(name: "Caknor", jobTitle: "Programmer", followerCount: 20, bio: "Hello World")
     
     var body: some View {
         VStack (alignment: .leading) {

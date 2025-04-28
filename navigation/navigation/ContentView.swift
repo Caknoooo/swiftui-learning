@@ -23,9 +23,10 @@ struct ContentView: View {
         .init(name: "Grand Theft Auto V", rating: 18)
     ]
 
+    @State private var path = NavigationPath()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack (path: $path) {
             List {
                 Section("Platforms") {
                     ForEach(platforms, id: \.name) { platform in
@@ -49,14 +50,37 @@ struct ContentView: View {
                 platform in
                 ZStack {
                     platform.color.ignoresSafeArea()
-                    Label(platform.name, systemImage: platform.imageName)
-                        .font(.largeTitle).bold()
+                    VStack {
+                        Label(platform.name, systemImage: platform.imageName)
+                            .font(.largeTitle).bold()
+                        
+                        List {
+                            ForEach(games, id: \.name) { game in
+                                NavigationLink(value: game) {
+                                    Text(game.name)
+                                }
+                            }
+                        }
+                    }
                  }
             }
-            .navigationDestination(for: Game.self) {
-                game in
-                Text ("\(game.name) has a rating of \(game.rating)")
-                    .font(.largeTitle.bold())
+            .navigationDestination(for: Game.self) { game in
+                VStack(spacing: 20) {
+                    Text ("\(game.name) - \(game.rating)")
+                        .font(.largeTitle.bold())
+                    
+                    Button("Recommended game") {
+                        path.append(games.randomElement()!)
+                    }
+                    
+                    Button("Go to another platform") {
+                        path.append(platforms.randomElement()!)
+                    }
+                    
+                    Button("Go Home") {
+                        path.removeLast(path.count)
+                    }
+                }
             }
         }
     }
